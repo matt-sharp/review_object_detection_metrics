@@ -117,7 +117,7 @@ class Details_Dialog(QMainWindow, Details_UI):
                 bboxes = BoundingBox.get_bounding_boxes_by_image_name(self.gt_annotations, img_name)
             # Draw bounding boxes
             for bb in bboxes:
-                img = add_bb_into_image(img, bb, color=(0, 255, 0), thickness=2, label=None)
+                img = add_bb_into_image(img, bb, color=(0, 255, 0), thickness=2, label=bb._class_id)
         if self.chb_det_bb.isChecked() and self.det_annotations is not None:
             bboxes = BoundingBox.get_bounding_boxes_by_image_name(self.det_annotations, img_name)
             if len(bboxes) == 0:
