@@ -189,11 +189,13 @@ def get_pascalvoc_metrics(gt_boxes,
         acc_TP = np.cumsum(TP)
         rec = acc_TP / npos
         prec = np.divide(acc_TP, (acc_FP + acc_TP))
+        f1_score = 2 *((prec * rec)/(prec + rec))
         if generate_table:
             dict_table['acc TP'] = list(acc_TP)
             dict_table['acc FP'] = list(acc_FP)
             dict_table['precision'] = list(prec)
             dict_table['recall'] = list(rec)
+            dict_table['f1_score'] = list(f1_score)
             table = pd.DataFrame(dict_table)
         else:
             table = None
@@ -208,6 +210,7 @@ def get_pascalvoc_metrics(gt_boxes,
         ret[c] = {
             'precision': prec,
             'recall': rec,
+            'f1_score': f1_score,
             'AP': ap,
             'interpolated precision': mpre,
             'interpolated recall': mrec,
@@ -236,6 +239,7 @@ def plot_precision_recall_curve(results,
 
         precision = result['precision']
         recall = result['recall']
+        f1_score = result['f1_score']
         average_precision = result['AP']
         mpre = result['interpolated precision']
         mrec = result['interpolated recall']
