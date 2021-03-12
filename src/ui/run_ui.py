@@ -361,18 +361,22 @@ class Main_Dialog(QMainWindow, Main_UI):
             if not self.chb_metric_AR_large.isChecked():
                 del coco_res['ARlarge']
         # If any pascal metric is required
-        if self.chb_metric_AP_pascal.isChecked() or self.chb_metric_mAP_pascal.isChecked():
+        if self.chb_metric_AP_pascal.isChecked() or self.chb_metric_mAP_pascal.isChecked() or self.chb_metric_f1_score_pascal.isChecked():
             iou_threshold = self.dsb_IOU_pascal.value()
             pascal_res = get_pascalvoc_metrics(gt_annotations,
                                                det_annotations,
                                                iou_threshold=iou_threshold,
                                                generate_table=True)
+ #           print(pascal_res)
             mAP = pascal_res['mAP']
+            f1_score = pascal_res['f1_score']
 
             if not self.chb_metric_AP_pascal.isChecked():
                 del pascal_res['per_class']
             if not self.chb_metric_mAP_pascal.isChecked():
                 del pascal_res['mAP']
+            if not self.chb_metric_f1_score_pascal.isChecked():
+                del pascal_res['f1_score']
 
             if 'per_class' in pascal_res:
                 # Save a single plot with all classes

@@ -31,6 +31,10 @@ class Results_Dialog(QMainWindow, Results_UI):
                     text += '<br />'
                     text += '<span style=" font-weight:600;">PASCAL METRIC (mAP)</span>'
                     text += tag_value.replace('VALUE', f'mAP: {res}')
+                elif metric == 'f1_score':
+                    text += '<br />'
+                    text += '<span style=" font-weight:600;">PASCAL METRIC (f1_score)</span>'
+                    text += tag_value.replace('VALUE', f'f1_score: {res}')
         self.txb_results.setText(text)
         self.lbl_folder_output.setText(folder_results)
         self.show()

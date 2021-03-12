@@ -139,7 +139,7 @@ def get_pascalvoc_metrics(gt_boxes,
             'acc TP': [],
             'acc FP': [],
             'precision': [],
-            'recall': []
+            'recall': [],
         }
         # Loop through detections
         for idx_det, det in enumerate(dects):
@@ -196,7 +196,6 @@ def get_pascalvoc_metrics(gt_boxes,
             dict_table['acc FP'] = list(acc_FP)
             dict_table['precision'] = list(prec)
             dict_table['recall'] = list(rec)
-            dict_table['f1_score'] = list(f1_score)
             table = pd.DataFrame(dict_table)
         else:
             table = None
@@ -211,7 +210,6 @@ def get_pascalvoc_metrics(gt_boxes,
         ret[c] = {
             'precision': prec,
             'recall': rec,
-            'f1_score': f1_score,
             'AP': ap,
             'interpolated precision': mpre,
             'interpolated recall': mrec,
@@ -224,7 +222,8 @@ def get_pascalvoc_metrics(gt_boxes,
         }
     # For mAP, only the classes in the gt set should be considered
     mAP = sum([v['AP'] for k, v in ret.items() if k in gt_classes_only]) / len(gt_classes_only)
-    return {'per_class': ret, 'mAP': mAP}
+    f1_score = np.amax(f1_score)
+    return {'per_class': ret, 'mAP': mAP, 'f1_score': f1_score}
 
 
 def plot_precision_recall_curve(results,
@@ -291,7 +290,6 @@ def plot_precision_recall_curves(results,
 
         precision = result['precision']
         recall = result['recall']
-        f1_score = result['f1_score']
         average_precision = result['AP']
         mpre = result['interpolated precision']
         mrec = result['interpolated recall']
