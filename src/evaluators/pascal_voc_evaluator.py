@@ -222,18 +222,20 @@ def get_pascalvoc_metrics(gt_boxes,
         }
     # For mAP, only the classes in the gt set should be considered
     mAP = sum([v['AP'] for k, v in ret.items() if k in gt_classes_only]) / len(gt_classes_only)
-    overall_positives = sum(v['total positives'] for k, v in ret.items())
-    print('overall_positives:', overall_positives)
+    overall_positives = sum(v['total positives'] for k, v in ret.items())   
     overall_tp = sum(v['total TP'] for k, v in ret.items())
-    print('tp:', overall_tp)
-#    overall_tp = sum(v['total TP'])'] for v in ret)
     overall_fp = sum(v['total FP'] for k, v in ret.items())
-    print('fp:', overall_fp)
-    overall_rec = overall_tp / overall_positives
-    print('rec:', overall_rec)
+    
+    overall_rec = overall_tp / overall_positives  
     overall_prec = np.divide(overall_tp, (overall_fp + overall_tp))
-    print('prec:', overall_prec)
+
     f1_score = 2 *((overall_prec * overall_rec)/(overall_prec + overall_rec))
+    
+    print('overall_positives:', overall_positives)
+    print('tp:', overall_tp)
+    print('fp:', overall_fp)
+    print('prec:', overall_prec)
+    print('rec:', overall_rec)
     print('f1-score:', f1_score)
 #    f1_score = np.amax(f1_score)
     return {'per_class': ret, 'mAP': mAP, 'f1_score': f1_score}
