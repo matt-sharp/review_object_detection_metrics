@@ -230,7 +230,7 @@ def get_pascalvoc_metrics(gt_boxes,
     overall_rec = overall_tp / overall_positives  
     overall_prec = np.divide(overall_tp, (overall_fp + overall_tp))
 
-    f1_score = 2 *((overall_prec * overall_rec)/(overall_prec + overall_rec))
+    f1_score = 2 * ((overall_prec * overall_rec) / (overall_prec + overall_rec))
     
     print('overall_positives:', overall_positives)
     print('tp:', overall_tp)
